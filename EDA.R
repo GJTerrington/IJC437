@@ -1,10 +1,10 @@
 
 
-# FILTER TO POPULAR SONGS ONLY (popularity ≥ 70)
+# filter to popular songs onlt (popularity ≥ 70)
 pop_data <- final_data %>%
   filter(popularity >= 70)
 
-# KEEP ONLY 1950s ONWARDS & REMOVE UNKNOWN DECADES
+# keep only 1950s onwards and remove unknown decades
 pop_data <- pop_data %>%
   filter(decade != "Unknown") %>%
   mutate(
@@ -12,32 +12,20 @@ pop_data <- pop_data %>%
   ) %>%
   filter(decade_num >= 1950)
 
-# SELECT ACOUSTIC FEATURES
+# select acoustic features
 acoustic_features <- c(
   "acousticness", "danceability", "energy", "instrumentalness",
   "liveness", "loudness", "speechiness", "valence", "tempo"
 )
 
-#  STANDARDISE FEATURES TO 0–1 SCALE
-standardise_01 <- function(x){
-  (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE))
-}
 
-pop_scaled <- pop_data %>%
-  mutate(across(all_of(acoustic_features), standardise_01))
-
-# BUILD SUMMARY TABLE (MEAN BY DECADE)
-acoustic_summary <- pop_scaled %>%
-  group_by(decade) %>%
-  summarise(across(all_of(acoustic_features), mean, na.rm = TRUE)) %>%
-  ungroup()
-
+# summary table (mean by decade)
 acoustic_summary <- pop_data %>%
   group_by(decade) %>%
   summarise(across(all_of(acoustic_features), mean, na.rm = TRUE)) %>%
   ungroup()
 
-# LONG FORMAT FOR FACETED CHARTS
+# long format for faceted charts
 acoustic_long <- acoustic_summary %>%
   pivot_longer(
     cols = all_of(acoustic_features),
@@ -60,15 +48,6 @@ ggplot(acoustic_long, aes(x = decade, y = value)) +
     strip.text = element_text(face = "bold"),
     axis.text.x = element_text(angle = 45, hjust = 1)
   )
-
-
-# 8. GENRE CHANGE ACROSS DECADES (POPULAR SONGS ONLY)
-genre_summary <- pop_data %>%
-  filter(genre != "Unknown") %>%
-  count(decade, genre) %>%
-  group_by(decade) %>%
-  mutate(prop = n / sum(n)) %>%
-  ungroup()
 
 
 
@@ -194,7 +173,7 @@ genre_categories <- genre_df %>%
     )
   )
 
-# Preview
+# preview
 head(genre_categories, 20)
 
 # join datasets by genre
