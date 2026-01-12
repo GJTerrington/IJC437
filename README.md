@@ -1,6 +1,8 @@
-# IJC437
+# What makes a song popular through time? Exploring the evolution of music using data science methods
+
 IJC437 module report code.
-The code can be used to explore how the features of opoular music have evolved over time, since the 1950s. It also investigates whether machine learning models can effectively classify songs as popular using acoustic features and contextual metadata.
+
+The code can be used to explore how the features of popular music have evolved over time, since the 1950s. It also investigates whether machine learning models can effectively classify songs as popular using acoustic features and contextual metadata.
 
 Research questions:
 1. How have the acoustic features and musical characteristics of popular songs changed across different decades?
@@ -30,7 +32,7 @@ The code is in three separate R documents:
 2. EDA.R
 3. ML.R
 
-Run them in the above order. Packages may need to be installed if not already.
+Packages may need to be installed if not already.
 
 Each code document can be run in its entirety at once. However, is imperative they are ran in the above order.
 
